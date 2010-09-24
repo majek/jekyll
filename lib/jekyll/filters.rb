@@ -1,3 +1,5 @@
+require 'digest/md5'
+
 module Jekyll
 
   module Filters
@@ -41,6 +43,11 @@ module Jekyll
       else
         "#{array[0...-1].join(', ')}, #{connector} #{array[-1]}"
       end
+    end
+
+    def md5(filename)
+      # $stderr.puts filename, Dir.getwd
+      md5 = Digest::MD5.hexdigest(IO.read(filename))
     end
 
   end
