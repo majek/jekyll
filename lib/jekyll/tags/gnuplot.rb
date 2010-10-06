@@ -1,5 +1,6 @@
 require 'digest/md5'
 require 'erb'
+require 'fileutils'
 
 def render_erb(template_source, user_context)
   template = ERB.new(template_source)
@@ -20,6 +21,7 @@ class Gnuplot < Liquid::Block
   def setup(context)
     @global_opts = context.registers[:site].config['gnuplot']['opts'] || Hash.new
     @out_dir = context.registers[:site].config['gnuplot']['out_dir']
+    FileUtils.mkdir_p @out_dir
     @out_url = context.registers[:site].config['gnuplot']['out_url']
   end
 

@@ -1,4 +1,5 @@
 require 'digest/md5'
+require 'fileutils'
 
 class Dot < Liquid::Block
   def initialize(tag_name, markup, tokens)
@@ -11,6 +12,7 @@ class Dot < Liquid::Block
     global_dot_opts = context.registers[:site].config['dot']['opts']
     types = ['png']
     out_dir = context.registers[:site].config['dot']['out_dir']
+    FileUtils.mkdir_p @out_dir
     out_url = context.registers[:site].config['dot']['out_url']
     md5 = Digest::MD5.hexdigest(code + global_dot_opts + @dot_opts)
     out_file = File.join(out_dir, md5 + '.' + types[0])
